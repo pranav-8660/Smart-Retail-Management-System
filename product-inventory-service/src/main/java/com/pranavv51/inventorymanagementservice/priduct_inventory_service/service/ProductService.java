@@ -1,7 +1,9 @@
 package com.pranavv51.inventorymanagementservice.priduct_inventory_service.service;
 
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.DTO.UpdateProductDTO;
+import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Inventory;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Product;
+import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.InventoryRepo;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,18 @@ public class ProductService {
     //private Product product;
 
     private final ProductRepo productRepo;
+    private final InventoryRepo inventoryRepo;
 
-    public ProductService(ProductRepo productRepo) {
+    public ProductService(ProductRepo productRepo, InventoryRepo inventoryRepo) {
         this.productRepo = productRepo;
+        this.inventoryRepo = inventoryRepo;
     }
 
     public Product createProduct(String pname, String pdesc, BigDecimal pprice){
-        return productRepo.save(new Product(pname,pdesc,pprice));
+
+        Product newproduct = new Product(pname,pdesc,pprice);
+        inventoryRepo.save(new Inventory(newproduct,0)); //creating the inventory for the product also, keeping the initial qty as 0
+        return productRepo.save(newproduct);
     }
 
     //handle the response in the ui for proper success/failure message

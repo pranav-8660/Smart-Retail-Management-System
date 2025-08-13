@@ -1,6 +1,7 @@
 package com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -24,6 +26,14 @@ public class Product {
 
 
     public Product(String name,String desc,BigDecimal price){
+        this.productName = name;
+        this.productDesc=desc;
+        this.productPrice = price;
+    }
+
+    //for updation purpose
+    public Product(long pid,String name,String desc,BigDecimal price){
+        this.productId=pid;
         this.productName = name;
         this.productDesc=desc;
         this.productPrice = price;

@@ -1,5 +1,7 @@
 package com.pranavv51.inventorymanagementservice.priduct_inventory_service.service;
 
+import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Inventory;
+import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Product;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.InventoryRepo;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.ProductRepo;
 import org.springframework.stereotype.Service;
@@ -15,5 +17,12 @@ public class InventoryService {
         this.productRepo = productRepo;
     }
 
-    private void
+    private boolean updateInventory(Product product,int newQuantity){
+        if(productRepo.existsById(product.getProductId())){
+            Inventory thisInventory = inventoryRepo.findByProductId(product.getProductId());
+            thisInventory.setProductQuantity(newQuantity);
+            return true;
+        }
+        return false;
+    }
 }

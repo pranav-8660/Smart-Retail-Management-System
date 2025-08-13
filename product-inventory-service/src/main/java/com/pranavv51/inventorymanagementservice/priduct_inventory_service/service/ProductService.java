@@ -35,7 +35,8 @@ public class ProductService {
         Product productToBeDeleted = productRepo.findByProductName(pname);
 
         if(productToBeDeleted!=null){
-            productRepo.delete(productToBeDeleted);
+            productRepo.delete(productToBeDeleted); //delete the product
+            inventoryRepo.delete(inventoryRepo.findByProductId(productToBeDeleted.getProductId())); //delete the inventory as well
             return true;
         }
 

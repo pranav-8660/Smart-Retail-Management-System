@@ -1,2 +1,2 @@
 ## Work in progress
-- Starting soon.....
+- Building the backend.....(product-inventory service built....user service pending)

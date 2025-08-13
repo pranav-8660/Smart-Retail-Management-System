@@ -39,8 +39,10 @@ public class ProductService {
         Product productToBeUpdated = productRepo.findByProductName(productName);
 
         if(productToBeUpdated!=null){
-            productRepo.delete(productToBeUpdated);
-            return productRepo.save(new Product(updatedProduct.getProductId(),updatedProduct.getNewOrOldProductName(),updatedProduct.getNewOrOldProductDesc(),updatedProduct.getNewOrOldProductPrice()));
+           if(deleteProduct(productName)){
+                return productRepo.save(new Product(updatedProduct.getProductId(),updatedProduct.getNewOrOldProductName(),updatedProduct.getNewOrOldProductDesc(),updatedProduct.getNewOrOldProductPrice()));
+           }
+           return productToBeUpdated;
         }
         return productToBeUpdated;
 

@@ -40,5 +40,9 @@ public class Inventory {
         this.productQuantity = productQuantity;
     }
 
+    public long getProductQuantity(){
+        return this.productQuantity;
+    }
+
 
 }

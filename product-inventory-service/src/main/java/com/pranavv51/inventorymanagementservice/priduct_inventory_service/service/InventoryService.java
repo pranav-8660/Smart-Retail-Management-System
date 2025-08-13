@@ -4,6 +4,7 @@ import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Product;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.InventoryRepo;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.ProductRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,7 +24,8 @@ public class InventoryService {
         inventoryRepo.delete(inventoryRepo.findByProductId(pid));
     }
 
-    private boolean updateInventory(Product product,int newQuantity){
+    @Transactional
+    public boolean updateInventory(Product product,long newQuantity){
         if(productRepo.existsById(product.getProductId()) && inventoryRepo.existsById(product.getProductId())){
             Inventory thisInventory = inventoryRepo.findByProductId(product.getProductId());
             thisInventory.setProductQuantity(newQuantity);

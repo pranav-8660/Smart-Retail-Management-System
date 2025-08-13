@@ -1,12 +1,9 @@
 package com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity;
 
-import com.pranavv51.inventorymanagementservice.priduct_inventory_service.PriductInventoryServiceApplication;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.Timer;
 
 @Entity
 @Table(name = "Order")

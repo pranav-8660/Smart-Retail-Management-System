@@ -4,6 +4,7 @@ package com.pranavv51.inventorymanagementservice.priduct_inventory_service.entit
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -13,16 +14,27 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Inventory {
 
     @Id
-    private Long productId;
+    private long productId;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "productId")
     private Product product;
 
-    private Long productQuantity;
+    private long productQuantity;
+
+    //to create inventory
+    public Inventory(Product product,long qty){
+
+        this.productId = product.getProductId();
+        this.product = product;
+        this.productQuantity = qty;
+
+    }
+
 
 }

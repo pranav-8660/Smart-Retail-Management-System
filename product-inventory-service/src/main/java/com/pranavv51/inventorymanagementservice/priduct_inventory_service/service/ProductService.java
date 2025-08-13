@@ -1,9 +1,7 @@
 package com.pranavv51.inventorymanagementservice.priduct_inventory_service.service;
 
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.DTO.UpdateProductDTO;
-import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Inventory;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.entity.Product;
-import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.InventoryRepo;
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +14,17 @@ public class ProductService {
     //private Product product;
 
     private final ProductRepo productRepo;
-    private final InventoryRepo inventoryRepo;
+    private final InventoryService inventoryService;
 
-    public ProductService(ProductRepo productRepo, InventoryRepo inventoryRepo) {
+    public ProductService(ProductRepo productRepo, InventoryService inventoryService) {
         this.productRepo = productRepo;
-        this.inventoryRepo = inventoryRepo;
+        this.inventoryService = inventoryService;
     }
 
     public Product createProduct(String pname, String pdesc, BigDecimal pprice){
 
         Product newproduct = new Product(pname,pdesc,pprice);
-        inventoryRepo.save(new Inventory(newproduct,0)); //creating the inventory for the product also, keeping the initial qty as 0
+        inventoryService.createInventoryInitially(newproduct);
         return productRepo.save(newproduct);
     }
 
@@ -36,7 +34,7 @@ public class ProductService {
 
         if(productToBeDeleted!=null){
             productRepo.delete(productToBeDeleted); //delete the product
-            inventoryRepo.delete(inventoryRepo.findByProductId(productToBeDeleted.getProductId())); //delete the inventory as well
+            inventoryService.deleteInventory(productToBeDeleted.getProductId());
             return true;
         }
 

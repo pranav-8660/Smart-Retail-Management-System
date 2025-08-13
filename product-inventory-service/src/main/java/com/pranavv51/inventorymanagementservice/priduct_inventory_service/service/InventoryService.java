@@ -6,6 +6,8 @@ import com.pranavv51.inventorymanagementservice.priduct_inventory_service.reposi
 import com.pranavv51.inventorymanagementservice.priduct_inventory_service.repository.ProductRepo;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class InventoryService {
 
@@ -17,12 +19,21 @@ public class InventoryService {
         this.productRepo = productRepo;
     }
 
+    public void deleteInventory(long pid){
+        inventoryRepo.delete(inventoryRepo.findByProductId(pid));
+    }
+
     private boolean updateInventory(Product product,int newQuantity){
-        if(productRepo.existsById(product.getProductId())){
+        if(productRepo.existsById(product.getProductId()) && inventoryRepo.existsById(product.getProductId())){
             Inventory thisInventory = inventoryRepo.findByProductId(product.getProductId());
             thisInventory.setProductQuantity(newQuantity);
             return true;
         }
         return false;
+    }
+
+    public Product createInventoryInitially(Product newproduct){
+        inventoryRepo.save(new Inventory(newproduct,0)); //creating the inventory for the product also, keeping the initial qty as 0
+        return productRepo.save(newproduct);
     }
 }

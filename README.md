@@ -1,1 +1,1 @@
-## Started off with user-service. Created a JwtUtil and JwtFilter for the user service...now i shall be adding the bcrypt password encoders and decoders.
+### Started off with user-service. Created a JwtUtil and JwtFilter for the user service...Also done with configuration class (defined 2 beans, one for securityfilterchain and the other for bcrypt password encoder) 

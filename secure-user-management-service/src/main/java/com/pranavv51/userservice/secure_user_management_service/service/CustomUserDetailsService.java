@@ -1,6 +1,5 @@
 package com.pranavv51.userservice.secure_user_management_service.service;
 
-
 import com.pranavv51.userservice.secure_user_management_service.model.User;
 import com.pranavv51.userservice.secure_user_management_service.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

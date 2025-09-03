@@ -13,7 +13,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "optimusprime";
+    private static final String SECRET_KEY = "optimusprime"; //only the backend knows the secret key, to verify the jwt token shared by ui...we can also keep this in environment variables(and later be used in sealed secrets(in kubernetes cluster)/ a config server also)
     private static final long EXPIRATION = 1000 * 30 * 60; // half an hour expiry for the token
 
     public String generateToken(UserDetails userDetails){
@@ -27,6 +27,7 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
 
+    //check if the shared jwt token has still not expired..if expired, the validateToken function returns false, so this request will be filtered...hence the user's request will not be served...
     public boolean isTokenExpired(String token){
         Date expiration = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
 

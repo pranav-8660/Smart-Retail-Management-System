@@ -46,9 +46,10 @@ public class SecureUserAuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User newuser){
-        newuser.setPassword(new BCryptPasswordEncoder().encode(newuser.getPassword()));
+        String oldpassword = newuser.getPassword();
+        newuser.setPassword(new BCryptPasswordEncoder().encode(oldpassword));
         userRepository.save(newuser);
-        newuser.setPassword("encodedpassword");
+        newuser.setPassword("encodedpassword("+oldpassword+")");
         return ResponseEntity.ok(newuser);
     }
 
